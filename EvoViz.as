@@ -35,7 +35,7 @@ package
 			event_debug = event_debug_txt;
 			event_debug.text = "Waiting for event...";		
 			version_num = versionNum_txt;
-			version_num.text = "Feb 15, 2012 v.2";
+			version_num.text = "Feb 15, 2012 v.3";
 			ExternalInterface.addCallback("sevToFlash", handleSev);
 			
 			stage.addEventListener( KeyboardEvent.KEY_DOWN, reportKeyDown );
