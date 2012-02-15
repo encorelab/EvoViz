@@ -14,6 +14,7 @@ package classes
 		private var contentList:Array;
 		private var contentHolder:MovieClip;
 		private var swfMask:Sprite;
+		private var stationState:String;
 		
 		public function Station( station_id:String, content_list:Array )		
 		{
@@ -24,12 +25,32 @@ package classes
 		}
 		public function loadOrientation( swf_url:String ):void
 		{
+			stationState = "orientation";
 			startLoad( swf_url );
 		}
 		public function loadRotation( rotation_num:uint ):void 
 		{
+			stationState = "rotation";
 			var swfName:String = contentList[rotation_num - 1]; 
 			startLoad( getSWFurl(swfName) );
+		}
+		public function startTransitionAnimation():void
+		{
+			stationState = "transition";
+			if ( stationID == "C"){
+				startLoad( EvoViz.transitionURL );				
+			} else {
+				startLoad( EvoViz.forestURL );
+			}
+		}
+		public function startPresent():void
+		{
+			stationState = "present";
+			if ( stationID == "A" || stationID == "B"){
+				startLoad( EvoViz.borneoURL );				
+			} else if ( stationID == "C" || stationID == "D"){
+				startLoad( EvoViz.sumatraURL );
+			}
 		}
 		private function setupContentHolder():void
 		{
@@ -57,6 +78,14 @@ package classes
 		private function onCompleteHandler(loadEvent:Event)
 		{
 			contentHolder.addChild(loadEvent.currentTarget.content);
+			if ( stationState == "present" ){
+				if( stationID == "A" || stationID == "C" ){
+					//do nothing
+				} else if ( stationID == "B" || stationID == "D" ){
+					var swf:* = contentHolder.getChildAt( contentHolder.numChildren-1 );
+					swf.x = -1536;
+				}
+			}
 		}
 		private function onProgressHandler(mProgress:ProgressEvent)
 		{

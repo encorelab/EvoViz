@@ -14,7 +14,10 @@ var EvoBoard = {
             student_submitted_data: passSailEventToFlash,
             some_other_event: passSailEventToFlash,
 	    orient: passSailEventToFlash,
-	    observations_start: passSailEventToFlash,
+	    observations_start: passSailEventToFlash,	    
+            transition_animation: passSailEventToFlash,
+	    transition_to_present: passSailEventToFlash,
+	    brainstorming: passSailEventToFlash,
 	    rankings_submitted: passSailEventToFlash,
 	    rationale_submitted: passSailEventToFlash
         },

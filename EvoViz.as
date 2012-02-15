@@ -22,7 +22,11 @@ package
 		public static var contentB:Array = ["150 mya", "10 mya", "Borneo"];
 		public static var contentC:Array = ["100 mya", "5 mya", "Sumatra"];
 		public static var contentD:Array = ["50 mya", "2 mya", "Sumatra"];
-		
+		public static var transitionURL:String = "swfs/transition.swf";
+		public static var forestURL:String = "swfs/forest.swf";
+		public static var borneoURL:String = "swfs/present_borneo.swf";
+		public static var sumatraURL:String = "swfs/present_sumatra.swf";
+			
 		private var station:Station;
 		
 		public function EvoViz()
@@ -33,14 +37,6 @@ package
 			version_num = versionNum_txt;
 			version_num.text = "";
 			ExternalInterface.addCallback("sevToFlash", handleSev);
-			
-			//for STEP1
-			//organism_vis = new OrganismVis();
-			//addChild( organism_vis );
-			//organism_vis.visible = false;
-			//guess_table.visible = false;
-			//rank_table.visible = false;
-			//rationale_table.visible = false;
 			
 			stage.addEventListener( KeyboardEvent.KEY_DOWN, reportKeyDown );
 		}		
@@ -64,14 +60,16 @@ package
 				//e.keyCode: 87
 				//e.keyCode: 69
 				//e.keyCode: 82
-				station.loadOrientation( getSWFurl( "200 mya") );		
+				//station.loadOrientation( getSWFurl( "200 mya") );
+				station.startTransitionAnimation();
 			} else if ( e.keyCode == 87 ){ //w
-				station.loadOrientation( getSWFurl( "150 mya") );
+				//station.loadOrientation( getSWFurl( "150 mya") );
+				station.startPresent();
 			} else if ( e.keyCode == 69 ){ //e
 				//station.loadRotation( 1 );
-				station.loadRotation( 2	);
+				//station.loadRotation( 2	);
 			} else if ( e.keyCode == 82 ){ //e
-				addStation("A");
+				//addStation("A");
 				
 			}
 		}
@@ -87,7 +85,7 @@ package
 			addChild( station );
 			version_num.text = "Station " + id;
 		}
-		//orient changes time period based on even
+		//orient changes time period based on event
 		//'orient', {time_period: "200 mya"}
 		private function orient( eventData ):void
 		{  
@@ -99,13 +97,28 @@ package
 		{  	
 			event_debug.appendText("\n" + "Start rotation: "+ eventData.rotation );
 			station.loadRotation( eventData.rotation );
-		}		
+		}
+		private function transition_animation( eventData ):void
+		{  	
+			event_debug.appendText("\n" + "Start transition" );
+			station.startTransitionAnimation();
+		}
+		private function transition_to_present( eventData ):void
+		{  	
+			event_debug.appendText("\n" + "Start Borneo/Sumatra");
+			station.startPresent();
+		}
+		private function brainstorming( eventData ):void
+		{  	
+			event_debug.appendText("\n" + "Start discussion for "+ eventData.time_period );
+			station.loadOrientation( getSWFurl( eventData.time_period )  );
+		}
 		private function handleSev(eventType, eventData):void 
 		{
 			//trace(eventType);
 			//trace(eventData);
 			event_debug.appendText("\n"+"handleSev: "+eventType+", "+eventData);
-			
+
 			switch(eventType) {
 				// add handlers for events here (one for each type of event)
 				case "orient":
@@ -113,6 +126,15 @@ package
 					break;
 				case "observations_start":
 					observations_start(eventData); 
+					break;
+				case "transition_animation":
+					transition_animation(eventData); 
+					break;
+				case "transition_to_present":
+					transition_to_present(eventData); 
+					break;
+				case "brainstorming":
+					brainstorming(eventData); 
 					break;
 				default:
 					trace("Unrecognized event received: "+eventType);
