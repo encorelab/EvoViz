@@ -35,7 +35,7 @@ package
 			event_debug = event_debug_txt;
 			event_debug.text = "Waiting for event...";		
 			version_num = versionNum_txt;
-			version_num.text = "Feb 16, 2012 v.1";
+			version_num.text = "Feb 15, 2012 v.2";
 			ExternalInterface.addCallback("sevToFlash", handleSev);
 			
 			stage.addEventListener( KeyboardEvent.KEY_DOWN, reportKeyDown );
@@ -63,6 +63,7 @@ package
 				station.loadOrientation( getSWFurl( "2 mya") );
 				//station.startTransitionAnimation();
 			} else if ( e.keyCode == 87 ){ //w
+				//station.loadOrientation( getSWFurl( "150 mya") );
 				//station.loadOrientation( getSWFurl( "150 mya") );
 				station.startPresent();
 			} else if ( e.keyCode == 69 ){ //e
