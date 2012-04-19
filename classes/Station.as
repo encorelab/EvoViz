@@ -26,6 +26,7 @@ package classes
 		public function loadOrientation( swf_url:String ):void
 		{
 			stationState = "orientation";
+			trace("swf_url: "+swf_url);
 			startLoad( swf_url );
 		}
 		public function loadRotation( rotation_num:uint ):void 

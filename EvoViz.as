@@ -11,13 +11,11 @@ package
 	
 	public class EvoViz extends Sprite
 	{
-		private var screen_height:Number = 768;
-		private var screen_width:Number = 1024;
 		private var event_debug:TextField;
 		private var version_num:TextField;
 		
-		public static var stage_width = 1536;
-		public static var stage_height = 768;
+		public static var stage_width = 1280;
+		public static var stage_height = 1024;
 		public static var contentA:Array = ["200 mya", "25 mya", "Borneo"];
 		public static var contentB:Array = ["150 mya", "10 mya", "Borneo"];
 		public static var contentC:Array = ["100 mya", "5 mya", "Sumatra"];
@@ -35,7 +33,7 @@ package
 			event_debug = event_debug_txt;
 			event_debug.text = "Waiting for event...";		
 			version_num = versionNum_txt;
-			version_num.text = "Feb 15, 2012 v.3";
+			version_num.text = "Apr 19 2012 v1";
 			ExternalInterface.addCallback("sevToFlash", handleSev);
 			
 			stage.addEventListener( KeyboardEvent.KEY_DOWN, reportKeyDown );
